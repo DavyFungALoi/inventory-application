@@ -4,13 +4,12 @@
 const Schema = mongoose.Schema;
 
 const keyboardSchema = new Schema({
-  name: {type: String, required:true},
-  price: Number,
-  catagory: String,
-  description: String,
-  numberInStock: String,
-  url: String,
-  brand: String,
+    name: {type: String, required:true},
+    description: String,
+    category: String,
+    brand:String,
+    price: Number,
+    numberInStock: String,
 });
 
 // Virtual for book's URL
