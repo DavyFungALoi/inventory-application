@@ -14,6 +14,7 @@ if (!userArgs[0].startsWith('mongodb')) {
 */
 var async = require("async");
 const Keyboard = require("./models/keyboard");
+const KeyboardCategory = require("./models/keyboardCategory");
 
 var mongoose = require("mongoose");
 var mongoDB = userArgs[0];
@@ -23,17 +24,17 @@ var db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 let Keyboards = [];
-/*
+let KeyboardCategories = [];
 
-  name: {type: String, required:true},
-  description: String,
-  category: String,
-  brand:String,
-  price: Number,
-  numberInStock: Number,
-  url: String,
-*/
-function keyboardCreate(name, description, category, brand, price, numberInStock, cb) {
+function keyboardCreate(
+  name,
+  description,
+  category,
+  brand,
+  price,
+  numberInStock,
+  cb
+) {
   keyboarddetail = {
     name: name,
     description: description,
@@ -56,6 +57,19 @@ function keyboardCreate(name, description, category, brand, price, numberInStock
   });
 }
 
+function keyboardCategoryCreate(name, cb) {
+  const keyboardCategorydetail = new KeyboardCategory({ name: name });
+  keyboardCategorydetail.save(function (err) {
+    if (err) {
+      cb(err, null);
+      return;
+    }
+    console.log("New KeyboardCategory: " + keyboardCategorydetail);
+    KeyboardCategories.push(keyboardCategorydetail);
+    cb(null, keyboardCategorydetail);
+  });
+}
+
 function createKeyboards(cb) {
   async.parallel(
     [
@@ -63,10 +77,10 @@ function createKeyboards(cb) {
         keyboardCreate(
           "Keychron K4 Wireless Mechanical Keyboard",
           "K4 has full-size functionality in a compact design with 100 necessary keys. Featuring two premium switch options enabling peak productivity and a great tactile typing experience.",
-          "Mechanical",
+          KeyboardCategories[0],
           "Keychron",
           "69",
-           "2", 
+          "2",
           callback
         );
       },
@@ -74,21 +88,35 @@ function createKeyboards(cb) {
         keyboardCreate(
           "Apple Magic Keyboard QWERTY",
           "Take care of your daily tasks faster and more accurately with the Apple Magic Keyboard. The new scissor mechanism gives you a more comfortable keyboard with fewer typos. The Magic keyboard connects to your Mac or PC wirelessly via Bluetooth. There's no need to worry about battery life. One full battery charge gives you a month of keyboard usage without you needing to recharge it.",
-          "Regular",
+          KeyboardCategories[1],
           "Apple",
           "99",
           "3",
           callback
         );
-        }
+      },
     ],
     // optional callback
     cb
   );
 }
 
+function createKeyboardsCategory(cb) {
+  async.parallel(
+    [
+      function (callback) {
+        keyboardCategoryCreate("Mechanical", callback);
+      },
+      function (callback) {
+        keyboardCategoryCreate("Regular", callback);
+      },
+    ],
+    cb
+  );
+}
+
 async.series(
-  [createKeyboards],
+  [createKeyboardsCategory, createKeyboards],
   // Optional callback
   function (err, results) {
     if (err) {

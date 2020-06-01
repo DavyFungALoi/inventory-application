@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const keyboardSchema = new Schema({
     name: {type: String, required:true},
     description: String,
-    category: String,
+    category: [{type: Schema.Types.ObjectId, ref: 'KeyboardCategory'}],
     brand:String,
     price: Number,
     numberInStock: String,
