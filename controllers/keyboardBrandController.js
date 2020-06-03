@@ -13,6 +13,7 @@ exports.keyboardBrand_list = function (req, res, next) {
         return next(err);
       }
       //Successful, so render
+      console.log(list_keyboardbrands)
       res.render("keyboardBrand_list", {
         name: "KeyboardBrand List",
         keyboardbrands_list: list_keyboardbrands,
