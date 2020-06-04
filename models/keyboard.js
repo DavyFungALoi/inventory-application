@@ -16,20 +16,9 @@ const keyboardSchema = new Schema({
 keyboardSchema
 .virtual('url')
 .get(function () {
+    return '/inventory/keyboard' +this._id
   
 });
 
 // Compile model from schema
 module.exports = mongoose.model('Keyboard', keyboardSchema );
-
-/*
-
-keyboard
-name
-price
-category[..0]
-description
-number in stock
-url
-brand[1]
-*/

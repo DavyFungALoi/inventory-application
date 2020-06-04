@@ -3,7 +3,7 @@ var router = express.Router();
 
 var keyboard_Controller = require('../controllers/keyboardController')
 var keyboardBrand_Controller = require('../controllers/keyboardBrandController')
-var keyboardCategory_controller = require('../controllers/keyboardCategoryController')
+var keyboardCategory_Controller = require('../controllers/keyboardCategoryController')
 
 /* GET home page. */
 
@@ -28,10 +28,14 @@ module.exports = router;
 
 router.get('/keyboardbrands', keyboardBrand_Controller.keyboardBrand_list);
 
+// GET request for list of an overview of Keyboard brands and associated data
 
-
+router.get('/keyboardbrandsdetail/:id', keyboardBrand_Controller.keyboardbrand_detail);
 
 // GET request for list of all Keyboard Categories.
 
-router.get('/keyboardcategories', keyboardCategory_controller.keyboardCategory_list);
+router.get('/keyboardcategories', keyboardCategory_Controller.keyboardCategory_list);
 
+// GET request for list of an overview of Keyboard categories and associated data
+
+router.get('/keyboardcategory/:id', keyboardCategory_Controller.keyboardCategory_detail);

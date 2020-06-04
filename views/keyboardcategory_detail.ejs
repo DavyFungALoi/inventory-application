@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Keyboards</h1>
+    <h2>Welcome to <%=title%></h2>
+    <h2><%= category.name %></h2>
+    <% category_keyboards.forEach(function(product){  %>
+        
+        <h3><%= product.name %></h3>
+        <li>Brand: <%= product.brand[0].name %></li>
+        <li>Price: <%= product.price %></li>        
+        <li>Category: <%= product.category[0].name%></li>
+        <li>Description: <%= product.description%></li>
+      
+<%})%>
+    
+</body>
+</html>

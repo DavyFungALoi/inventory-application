@@ -12,7 +12,7 @@ const keyboardCategorySchema = new Schema({
 keyboardCategorySchema
 .virtual('url')
 .get(function () {
-  
+    return '/inventory/keyboardcategory/' +this._id
 });
 
 module.exports = mongoose.model('KeyboardCategory', keyboardCategorySchema );
