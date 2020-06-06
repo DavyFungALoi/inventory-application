@@ -196,6 +196,7 @@ async.series(
       console.log("The array is as following: " + Keyboards);
     }
     // All done, disconnect from database
+    console.log(KeyboardBrands)
     mongoose.connection.close();
   }
 );

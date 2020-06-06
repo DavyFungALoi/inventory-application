@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Keyboards</title>
+    <link rel="stylesheet" href="../public/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <h1><%=title%></h1>
+    <h2>Make sure a keyboard has all of the info needed.</h2>
+
+    <div class="form-contner">
+      <form class="form-container" method="POST" action="">
+        <div class="container-wrapper">
+          <label for="name">Name</label>
+          <input type="text" name="name" value="" required />
+          <label for="description">Description</label>
+          <textarea type="text" name="description" value="" row="5" cols="50" required></textarea>
+          <label for="category">Category</label>
+          <select name="category">
+            <% keyboardCategories.forEach(function(category){ %>
+
+            <option value="<%=category.id%>"><%=category.name%></option>
+
+            <%})%>
+          </select>
+
+          <label for="brand">Brand</label>
+
+          <select name="brand">
+            <% keyboardBrands.forEach(function(brand){ %>
+
+            <option value="<%=brand.id%>"><%=brand.name%></option>
+
+            <%})%>
+          </select>
+          <label for="name">Price</label>
+          <input type="number" name="price" value="" required />
+          <label for="name">Number In Stock</label>
+          <input type="number" name="numberInStock" value="" required />
+          <input
+            class="form__btn__submit"
+            type="submit"
+            value="Create Keyboard"
+          />
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

@@ -7,9 +7,9 @@ const keyboardSchema = new Schema({
     name: {type: String, required:true},
     description: String,
     category: [{type: Schema.Types.ObjectId, ref: 'KeyboardCategory'}],
-    brand: [{type: Schema.Types.ObjectId, ref: 'KeyboardBrand'}],
+    brand: {type: Schema.Types.ObjectId, ref: 'KeyboardBrand'},
     price: Number,
-    numberInStock: String,
+    numberInStock: Number,
 });
 
 // Virtual for book's URL

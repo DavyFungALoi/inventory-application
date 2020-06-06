@@ -14,11 +14,15 @@ router.get('/', keyboard_Controller.index);
 
 // GET request for list of all Keyboard items.
 router.get('/keyboards', keyboard_Controller.keyboard_list);
-/*
-router.get('/', function(req, res) {
-  res.get('/', keyboard_Controller.index);
-});
-*/
+
+// GET request for keyboard creation display
+
+router.get('/keyboardcreate', keyboard_Controller.keyboard_create_display);
+
+// POST request for keyboard creation submit
+router.post('/keyboardcreate', keyboard_Controller.keyboard_create_post);
+
+
 
 //router.get('/test', keyboard_Controller.test);
 module.exports = router;
@@ -28,9 +32,18 @@ module.exports = router;
 
 router.get('/keyboardbrands', keyboardBrand_Controller.keyboardBrand_list);
 
+// GET request for creation of Keyboard Brands
+
+router.get('/keyboardbrandcreate', keyboardBrand_Controller.keyboardBrand_create_display);
+
+// POST request for keyboard creation submit
+router.post('/keyboardbrandcreate', keyboardBrand_Controller.keyboardBrand_create_post);
+
+
+
 // GET request for list of an overview of Keyboard brands and associated data
 
-router.get('/keyboardbrandsdetail/:id', keyboardBrand_Controller.keyboardbrand_detail);
+router.get('/keyboardbrandsdetail/:id', keyboardBrand_Controller.keyboardBrand_detail);
 
 // GET request for list of all Keyboard Categories.
 
@@ -39,3 +52,5 @@ router.get('/keyboardcategories', keyboardCategory_Controller.keyboardCategory_l
 // GET request for list of an overview of Keyboard categories and associated data
 
 router.get('/keyboardcategory/:id', keyboardCategory_Controller.keyboardCategory_detail);
+
+
