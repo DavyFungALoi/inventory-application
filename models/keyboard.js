@@ -16,7 +16,7 @@ const keyboardSchema = new Schema({
 keyboardSchema
 .virtual('url')
 .get(function () {
-    return '/inventory/keyboard' +this._id
+    return '/inventory/keyboard/' +this._id
   
 });
 

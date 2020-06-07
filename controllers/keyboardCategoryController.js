@@ -47,3 +47,32 @@ exports.keyboardCategory_detail = function(req, res, next) {
   });
 
 };
+
+exports.keyboardCategory_create_display = function (req, res, next) {
+  res.render("keyboardcategory_create", {
+    title: "Welcome to Keyboard category Creation",
+  });
+};
+
+exports.keyboardCategory_create_post = function (req, res, next) {
+  const keyboardCategory = new KeyboardCategory({
+    name: req.body.name,
+  });
+  KeyboardCategory.findOne({'name':req.body.name}).exec(function(err,found_category
+    ){
+      if(err) {return next(err)}
+      if (found_category) {
+        res.redirect("/inventory/keyboardcategories")
+        console.log("Category already exist")
+      }
+      else {
+        keyboardCategory.save(function (err) {
+          if (err) {
+            return next(err);
+          }
+          res.redirect("/inventory/keyboardcategories");
+        });
+
+      }
+    }) 
+};

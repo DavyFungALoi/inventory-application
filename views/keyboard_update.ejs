@@ -6,20 +6,24 @@
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
-    <h1><%=title%></h1>
+    <h1><%=title%> <%=keyboard.name%></h1>
     <h2>Make sure a keyboard has all of the info needed.</h2>
+    <h3><%=keyboard.category%></h3>
+
+    <h3><%=keyboard.brand.id%></h3>
+    <h3><%=keyboard.brand.name%></h3>
 
     <div class="form-contner">
       <form class="form-container" method="POST" action="">
         <div class="container-wrapper">
           <label for="name">Name</label>
-          <input type="text" name="name" value="" required />
+          <input type="text" name="name" value="<%=keyboard.name%>" required />
           <label for="description">Description</label>
-          <textarea type="text" name="description" value="" row="5" cols="50" required></textarea>
+          <textarea type="text" name="description" placeholder="<%=keyboard.description%>" row="5" cols="50" required></textarea>
           <label for="category">Category</label>
           <select name="category">
-            <option disabled selected value> -- select a category -- </option>
-            <% keyboardCategories.forEach(function(category){ %>
+            <option value="<%=keyboard.category%>" selected = "<%=keyboard.name%>"> </option>
+            <% categories.forEach(function(category){ %>
 
             <option value="<%=category.id%>"><%=category.name%></option>
 
@@ -29,21 +33,21 @@
           <label for="brand">Brand</label>
 
           <select name="brand">
-            <option disabled selected value> -- select an brand -- </option>
-            <% keyboardBrands.forEach(function(brand){ %>
+            <option value="<%=keyboard.brand.id%>" selected = "<%=keyboard.brand.name%>"> </option>  
+            <% brands.forEach(function(brand){ %>
               
             <option value="<%=brand.id%>"><%=brand.name%></option>
 
             <%})%>
           </select>
           <label for="name">Price</label>
-          <input type="number" name="price" value="" required />
+          <input type="number" name="price" value="<%=keyboard.price%>"  required />
           <label for="name">Number In Stock</label>
-          <input type="number" name="numberInStock" value="" required />
+          <input type="number" name="numberInStock" value="<%=keyboard.numberInStock%>" required />
           <input
             class="form__btn__submit"
             type="submit"
-            value="Create Keyboard"
+            value="Update keyboard"
           />
         </div>
       </form>

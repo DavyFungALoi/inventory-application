@@ -68,60 +68,82 @@ exports.keyboardBrand_create_post = function (req, res, next) {
   const keyboardBrand = new KeyboardBrand({
     name: req.body.name,
   });
-  KeyboardBrand.findOne({'name':req.body.name}).exec(function(err,found_brand
-    ){
-      if(err) {return next(err)}
-      if (found_brand) {
-        res.redirect("/inventory/keyboardbrands")
-        console.log("Brand already exist")
+  KeyboardBrand.findOne({ name: req.body.name }).exec(function (
+    err,
+    found_brand
+  ) {
+    if (err) {
+      return next(err);
+    }
+    if (found_brand) {
+      res.redirect("/inventory/keyboardbrands");
+      console.log("Brand already exist");
+    } else {
+      keyboardBrand.save(function (err) {
+        if (err) {
+          return next(err);
+        }
+        res.redirect("/inventory/keyboardbrands");
+      });
+    }
+  });
+};
+// Display brand delete form on GET.
+exports.keyboardBrand_delete_get = function (req, res, next) {
+  async.parallel(
+    {
+      keyboardbrand: function (callback) {
+        KeyboardBrand.findById(req.params.id).exec(callback);
+      },
+      keyboardbrands_keyboards: function (callback) {
+        Keyboard.find({ brand: req.params.id }).exec(callback);
+      },
+    },
+    function (err, results) {
+      if (err) {
+        return next(err);
       }
-      else {
-        keyboardBrand.save(function (err) {
-          if (err) {
-            return next(err);
-          }
-          res.redirect("/inventory/keyboardbrands");
-        });
-
+      if ((results.brand = null)) {
+        res.redirect("/inventory/brands");
       }
-    }) 
+      res.render("keyboardbrand_delete", {
+        title: "Delete Brand",
+        keyboardbrand: results.keyboardbrand,
+        keyboardbrands_keyboards: results.keyboardbrands_keyboards,
+      });
+    }
+  );
 };
 
-/*
-
-  KeyboardBrand.findOne({'name':req.body.name}).exec
-    (function(err, found_brand) {
-    if (err) {return next(err)}
-   
-    else
+exports.keyboardBrand_delete_brand = function (req, res, next) {
+  async.parallel(
     {
-      keyboardBrand.save(function (err) {
-        if (err) {
-          return next(err);
-        }
+      keyboardbrand: function (callback) {
+        KeyboardBrand.findById(req.body.keyboardbrandid).exec(callback);
+      },
+      keyboardbrands_keyboards: function (callback) {
+        Keyboard.find({ 'brand': req.body.keyboardbrandid }).exec(callback);
+      },
+    },
+    function (err, results) {
+      if (err) {
+        return next(err);
+      }
+      if (results.keyboardbrands_keyboards.length > 0) {
         res.redirect("/inventory/keyboardbrands");
-      });
-  }
-}
-
-
- if(found_brand) {
-      res.redirect("/inventory/keyboardbrands")
-      console.log('Found it')
+        console.log(
+          "you have a keyboard brand, please delete 1 a keyboard first"
+        );
+        return;
+      } else {
+        KeyboardBrand.findByIdAndRemove(req.body.keyboardbrandid),
+          function deleteKeyboardBrand(err) {
+            if (err) {
+              return next(err);
+            }
+            res.redirect("/inventory/keyboardbrands");
+          };
+      }
     }
-
-     (function(err, found_brand) {
-    if (err) {return next(err)}
-   
-    else
-    {
-      keyboardBrand.save(function (err) {
-        if (err) {
-          return next(err);
-        }
-        res.redirect("/inventory/keyboardbrands");
-      });
-  }
-}
-
-*/
+  );
+};

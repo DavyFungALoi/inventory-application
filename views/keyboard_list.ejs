@@ -10,10 +10,13 @@
     <% keyboard_list.forEach(function(product){  %>
         
           <h3><%= product.name %></h3>
-          <li>Brand: <%= product.brand.name %></li>
+          <li>Brand: <%= product.brand.name%></li>
           <li>Price: <%= product.price %></li>        
           <li>Category: <%= product.category[0].name%></li>
           <li>Description: <%= product.description%></li>
+          <a href="<%=product.url+'/update'%>">Click here to go to update this keyboard</a>  
+
+
         
 <%})%>
   </body>
